@@ -480,6 +480,8 @@ document
    編輯學生
 ========================= */
 
+let editingStudentId = null;
+
 function editStudent(id) {
 
   const student =
@@ -492,103 +494,73 @@ function editStudent(id) {
     return;
   }
 
-  const newName =
-    prompt(
-      "👤 請輸入學生姓名",
-      student.name
-    );
+  editingStudentId = id;
 
-  if (newName === null) {
-    return;
-  }
+  // 填入原本的學生資料
+  document.getElementById("editName").value =
+    student.name || "";
 
-  const newGrade =
-    prompt(
-      "🎓 請輸入年級\n一年級～六年級、國一、國二、國三",
-      student.grade
-    );
+  document.getElementById("editGrade").value =
+    student.grade || "";
 
-  if (newGrade === null) {
-    return;
-  }
+  document.getElementById("editStatus").value =
+    student.status || "";
 
-  const newStatus =
-    prompt(
-      "🟢 請輸入狀態\n🟢 上課中 / 🟡 暫停 / 🔴 結束",
-      student.status
-    );
+  // 設定課程按鈕
+  const courses = student.courses || [];
 
-  if (newStatus === null) {
-    return;
-  }
+  document.querySelectorAll(".editCourse")
+    .forEach(function(button) {
 
-  const newCourses =
-    prompt(
-      "📚 請輸入上課課程，用「、」分隔\n例如：英文、課輔",
-      student.courses.join("、")
-    );
+      const course =
+        button.textContent.trim();
 
-  if (newCourses === null) {
-    return;
-  }
+      if (courses.includes(course)) {
 
-  const courses =
-    newCourses
-      .split("、")
-      .map(function(course) {
-        return course.trim();
-      })
-      .filter(function(course) {
-        return course !== "";
-      });
+        button.classList.add("selected");
 
-  fetch(GAS_URL, {
+        button.style.background = "#333";
+        button.style.color = "white";
 
-    method: "POST",
+      } else {
 
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8"
-    },
+        button.classList.remove("selected");
 
-    body: JSON.stringify({
+        button.style.background = "#f0f0f0";
+        button.style.color = "#333";
 
-      id: id,
-      name: newName.trim(),
-      grade: newGrade.trim(),
-      status: newStatus.trim(),
-      courses: courses
+      }
 
-    })
+    });
 
-  })
+  // 打開編輯視窗
+  document.getElementById("editModal")
+    .style.display = "flex";
+}
 
-  .then(function(response) {
-    return response.json();
-  })
+  document
+  .querySelectorAll(".editCourse")
+  .forEach(function(button) {
 
-  .then(function(data) {
+    button.addEventListener("click", function() {
 
-    if (!data.success) {
-      throw new Error(
-        data.message || "修改失敗"
-      );
-    }
+      this.classList.toggle("selected");
 
-    alert("✅ 學生資料修改成功！");
+      if (this.classList.contains("selected")) {
 
-    loadStudents();
+        this.style.background = "#333";
+        this.style.color = "white";
 
-  })
+      } else {
 
-  .catch(function(error) {
+        this.style.background = "#f0f0f0";
+        this.style.color = "#333";
 
-    alert("❌ 修改失敗");
+      }
 
-    console.error(error);
+    });
 
   });
-
-}
 
 
 /* =========================
@@ -599,5 +571,156 @@ loadStudents();
 
 </script>
 
+  <!-- =========================
+     編輯學生視窗
+========================= -->
+
+<div id="editModal"
+     style="
+       display:none;
+       position:fixed;
+       inset:0;
+       background:rgba(0,0,0,0.45);
+       z-index:9999;
+       padding:20px;
+       align-items:center;
+       justify-content:center;
+     ">
+
+  <div style="
+    width:100%;
+    max-width:420px;
+    background:white;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  ">
+
+    <h2 style="
+      margin-top:0;
+      margin-bottom:20px;
+    ">
+      ✏️ 編輯學生
+    </h2>
+
+    <label>👤 姓名</label>
+
+    <input
+      id="editName"
+      type="text"
+      style="
+        width:100%;
+        padding:12px;
+        margin:6px 0 16px;
+        border:1px solid #ddd;
+        border-radius:10px;
+        font-size:16px;
+      "
+    >
+
+    <label>🎓 年級</label>
+
+    <select
+      id="editGrade"
+      style="
+        width:100%;
+        padding:12px;
+        margin:6px 0 16px;
+        border:1px solid #ddd;
+        border-radius:10px;
+        font-size:16px;
+      "
+    >
+      <option value="">請選擇年級</option>
+      <option>一年級</option>
+      <option>二年級</option>
+      <option>三年級</option>
+      <option>四年級</option>
+      <option>五年級</option>
+      <option>六年級</option>
+      <option>國一</option>
+      <option>國二</option>
+      <option>國三</option>
+    </select>
+
+    <label>🟢 狀態</label>
+
+    <select
+      id="editStatus"
+      style="
+        width:100%;
+        padding:12px;
+        margin:6px 0 16px;
+        border:1px solid #ddd;
+        border-radius:10px;
+        font-size:16px;
+      "
+    >
+      <option value="">請選擇狀態</option>
+      <option>🟢 上課中</option>
+      <option>🟡 暫停</option>
+      <option>🔴 結束</option>
+    </select>
+
+    <label>📚 上課課程</label>
+
+    <div style="
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+      margin-bottom:20px;
+    ">
+
+      <button type="button" class="editCourse">國文</button>
+      <button type="button" class="editCourse">英文</button>
+      <button type="button" class="editCourse">數學</button>
+      <button type="button" class="editCourse">課輔</button>
+      <button type="button" class="editCourse">理化</button>
+
+    </div>
+
+    <div style="
+      display:flex;
+      gap:10px;
+    ">
+
+      <button
+        type="button"
+        id="cancelEdit"
+        style="
+          flex:1;
+          padding:12px;
+          border:none;
+          border-radius:10px;
+          background:#eee;
+          font-size:16px;
+        "
+      >
+        取消
+      </button>
+
+      <button
+        type="button"
+        id="saveEdit"
+        style="
+          flex:1;
+          padding:12px;
+          border:none;
+          border-radius:10px;
+          background:#333;
+          color:white;
+          font-size:16px;
+        "
+      >
+        💾 儲存
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+  
 </body>
 </html>
