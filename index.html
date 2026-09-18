@@ -487,60 +487,50 @@ function editStudent(id) {
       return student.id === id;
     });
 
-
   if (!student) {
     alert("找不到學生資料");
     return;
   }
 
-
   const newName =
     prompt(
-      "請輸入學生姓名",
+      "👤 請輸入學生姓名",
       student.name
     );
-
 
   if (newName === null) {
     return;
   }
 
-
   const newGrade =
     prompt(
-      "請輸入年級\n一年級～六年級、國一、國二、國三",
+      "🎓 請輸入年級\n一年級～六年級、國一、國二、國三",
       student.grade
     );
-
 
   if (newGrade === null) {
     return;
   }
 
-
   const newStatus =
     prompt(
-      "請輸入狀態\n🟢 上課中 / 🟡 暫停 / 🔴 結束",
+      "🟢 請輸入狀態\n🟢 上課中 / 🟡 暫停 / 🔴 結束",
       student.status
     );
-
 
   if (newStatus === null) {
     return;
   }
 
-
   const newCourses =
     prompt(
-      "請輸入上課課程，用「、」分隔\n例如：英文、課輔",
+      "📚 請輸入上課課程，用「、」分隔\n例如：英文、課輔",
       student.courses.join("、")
     );
-
 
   if (newCourses === null) {
     return;
   }
-
 
   const courses =
     newCourses
@@ -551,7 +541,6 @@ function editStudent(id) {
       .filter(function(course) {
         return course !== "";
       });
-
 
   fetch(GAS_URL, {
 
@@ -564,20 +553,18 @@ function editStudent(id) {
     body: JSON.stringify({
 
       id: id,
-      name: newName,
-      grade: newGrade,
-      status: newStatus,
+      name: newName.trim(),
+      grade: newGrade.trim(),
+      status: newStatus.trim(),
       courses: courses
 
     })
 
   })
 
-
   .then(function(response) {
     return response.json();
   })
-
 
   .then(function(data) {
 
@@ -587,13 +574,11 @@ function editStudent(id) {
       );
     }
 
-
     alert("✅ 學生資料修改成功！");
 
     loadStudents();
 
   })
-
 
   .catch(function(error) {
 
