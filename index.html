@@ -99,6 +99,7 @@
 
   <h1>🧑‍🎓 學生名單</h1>
 
+  <!-- 新增學生 -->
   <div class="card">
 
     <label>👤 姓名</label>
@@ -128,7 +129,6 @@
     <label>📚 上課課程</label>
 
     <div class="courses">
-
       <div class="course" data-course="英文">英文</div>
       <div class="course" data-course="數學">數學</div>
       <div class="course" data-course="課輔">課輔</div>
@@ -136,39 +136,45 @@
       <div class="course" data-course="私中英文">私中英文</div>
       <div class="course" data-course="私中數學">私中數學</div>
       <div class="course" data-course="私中國文">私中國文</div>
-
     </div>
 
     <button id="addButton">➕ 新增學生</button>
 
     <div id="message"></div>
 
-    <div class="card">
+  </div>
 
-  <h2>📋 學生列表</h2>
 
-      <input
-  id="searchInput"
-  type="text"
-  placeholder="🔍 搜尋學生姓名"
-  style="margin-bottom:12px;"
->
-      
-  <div id="studentList">
-    載入中⋯
+  <!-- 學生列表 -->
+  <div class="card">
+
+    <h2>📋 學生列表</h2>
+
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="🔍 搜尋學生姓名"
+      style="margin-bottom:12px;"
+    >
+
+    <div id="studentList">
+      載入中⋯
+    </div>
+
   </div>
 
 </div>
-    
-  </div>
 
-</div>
 
 <script>
 
 const GAS_URL =
   "https://script.google.com/macros/s/AKfycbyv3-omK-QEzQUOxo8btegugZwM3TuuAHCEdZMWWA-RecRakp6b84BfEh2vZ17evAnddA/exec";
 
+
+/* =========================
+   課程按鈕
+========================= */
 
 const courseButtons =
   document.querySelectorAll(".course");
@@ -184,6 +190,10 @@ courseButtons.forEach(function(button) {
 
 });
 
+
+/* =========================
+   新增學生
+========================= */
 
 document
   .getElementById("addButton")
@@ -235,20 +245,26 @@ document
     const button =
       document.getElementById("addButton");
 
+
     button.disabled = true;
     button.textContent = "新增中⋯";
 
 
     fetch(GAS_URL, {
       method: "POST",
+
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
+
       body: JSON.stringify(data)
+
     })
+
     .then(function(response) {
       return response.text();
     })
+
     .then(function() {
 
       document.getElementById("message").textContent =
@@ -262,7 +278,10 @@ document
         button.classList.remove("selected");
       });
 
+      loadStudents();
+
     })
+
     .catch(function(error) {
 
       document.getElementById("message").textContent =
@@ -271,6 +290,7 @@ document
       console.error(error);
 
     })
+
     .finally(function() {
 
       button.disabled = false;
@@ -280,7 +300,17 @@ document
 
   });
 
- let allStudents = [];
+
+/* =========================
+   學生資料
+========================= */
+
+let allStudents = [];
+
+
+/* =========================
+   讀取學生
+========================= */
 
 function loadStudents() {
 
@@ -289,10 +319,13 @@ function loadStudents() {
 
   studentList.textContent = "載入中⋯";
 
+
   fetch(GAS_URL)
+
     .then(function(response) {
       return response.json();
     })
+
     .then(function(data) {
 
       if (!data.success) {
@@ -304,6 +337,7 @@ function loadStudents() {
       renderStudents(allStudents);
 
     })
+
     .catch(function(error) {
 
       studentList.textContent =
@@ -312,8 +346,13 @@ function loadStudents() {
       console.error(error);
 
     });
+
 }
 
+
+/* =========================
+   顯示學生
+========================= */
 
 function renderStudents(students) {
 
@@ -321,6 +360,7 @@ function renderStudents(students) {
     document.getElementById("studentList");
 
   studentList.innerHTML = "";
+
 
   if (students.length === 0) {
 
@@ -336,52 +376,80 @@ function renderStudents(students) {
     const card =
       document.createElement("div");
 
+
     card.style.padding = "14px";
     card.style.marginBottom = "10px";
     card.style.border = "1px solid #eee";
     card.style.borderRadius = "12px";
     card.style.background = "#fafafa";
 
-card.innerHTML = `
-  <div style="display:flex;justify-content:space-between;align-items:center;">
 
-    <div style="font-size:18px;font-weight:bold;">
-      ${student.name}
-    </div>
+    card.innerHTML = `
 
-    <button
-      onclick="editStudent('${student.id}')"
-      style="
-        border:none;
-        background:#f0f0f0;
-        padding:7px 12px;
-        border-radius:8px;
-        cursor:pointer;
-        font-size:14px;
-      "
-    >
-      ✏️ 編輯
-    </button>
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      ">
 
-  </div>
+        <div style="
+          font-size:18px;
+          font-weight:bold;
+        ">
+          ${student.name}
+        </div>
 
-  <div style="margin-top:6px;">
-    🎓 ${student.grade || "未設定"}
-  </div>
+        <button
+          onclick="editStudent('${student.id}')"
+          style="
+            width:auto;
+            margin-top:0;
+            border:none;
+            background:#f0f0f0;
+            color:#333;
+            padding:7px 12px;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:14px;
+          "
+        >
+          ✏️ 編輯
+        </button>
 
-  <div style="margin-top:6px;">
-    ${student.status || "⚪ 未設定"}
-  </div>
+      </div>
 
-  <div style="margin-top:6px;">
-    📚 ${
-      student.courses.length > 0
-        ? student.courses.join("、")
-        : "未設定"
-    }
-  </div>
-`;
 
+      <div style="margin-top:6px;">
+        🎓 ${student.grade || "未設定"}
+      </div>
+
+
+      <div style="margin-top:6px;">
+        ${student.status || "⚪ 未設定"}
+      </div>
+
+
+      <div style="margin-top:6px;">
+        📚 ${
+          student.courses.length > 0
+            ? student.courses.join("、")
+            : "未設定"
+        }
+      </div>
+
+    `;
+
+
+    studentList.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   搜尋學生
+========================= */
 
 document
   .getElementById("searchInput")
@@ -389,6 +457,7 @@ document
 
     const keyword =
       this.value.trim().toLowerCase();
+
 
     const filteredStudents =
       allStudents.filter(function(student) {
@@ -399,9 +468,15 @@ document
 
       });
 
+
     renderStudents(filteredStudents);
 
   });
+
+
+/* =========================
+   編輯學生
+========================= */
 
 function editStudent(id) {
 
@@ -410,17 +485,24 @@ function editStudent(id) {
       return student.id === id;
     });
 
+
   if (!student) {
     alert("找不到學生資料");
     return;
   }
 
+
   const newName =
-    prompt("請輸入學生姓名", student.name);
+    prompt(
+      "請輸入學生姓名",
+      student.name
+    );
+
 
   if (newName === null) {
     return;
   }
+
 
   const newGrade =
     prompt(
@@ -428,9 +510,11 @@ function editStudent(id) {
       student.grade
     );
 
+
   if (newGrade === null) {
     return;
   }
+
 
   const newStatus =
     prompt(
@@ -438,9 +522,11 @@ function editStudent(id) {
       student.status
     );
 
+
   if (newStatus === null) {
     return;
   }
+
 
   const newCourses =
     prompt(
@@ -448,9 +534,11 @@ function editStudent(id) {
       student.courses.join("、")
     );
 
+
   if (newCourses === null) {
     return;
   }
+
 
   const courses =
     newCourses
@@ -472,30 +560,38 @@ function editStudent(id) {
     },
 
     body: JSON.stringify({
+
       id: id,
       name: newName,
       grade: newGrade,
       status: newStatus,
       courses: courses
+
     })
 
   })
+
 
   .then(function(response) {
     return response.json();
   })
 
+
   .then(function(data) {
 
     if (!data.success) {
-      throw new Error(data.message || "修改失敗");
+      throw new Error(
+        data.message || "修改失敗"
+      );
     }
+
 
     alert("✅ 學生資料修改成功！");
 
     loadStudents();
 
   })
+
 
   .catch(function(error) {
 
@@ -506,10 +602,14 @@ function editStudent(id) {
   });
 
 }
-    
+
+
+/* =========================
+   啟動
+========================= */
+
 loadStudents();
 
-  
 </script>
 
 </body>
