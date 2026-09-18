@@ -496,20 +496,23 @@ function editStudent(id) {
 
   editingStudentId = id;
 
-  // 填入原本的學生資料
+  // 填入姓名
   document.getElementById("editName").value =
     student.name || "";
 
+  // 填入年級
   document.getElementById("editGrade").value =
     student.grade || "";
 
+  // 填入狀態
   document.getElementById("editStatus").value =
     student.status || "";
 
   // 設定課程按鈕
   const courses = student.courses || [];
 
-  document.querySelectorAll(".editCourse")
+  document
+    .querySelectorAll(".editCourse")
     .forEach(function(button) {
 
       const course =
@@ -518,14 +521,12 @@ function editStudent(id) {
       if (courses.includes(course)) {
 
         button.classList.add("selected");
-
         button.style.background = "#333";
         button.style.color = "white";
 
       } else {
 
         button.classList.remove("selected");
-
         button.style.background = "#f0f0f0";
         button.style.color = "#333";
 
@@ -536,9 +537,15 @@ function editStudent(id) {
   // 打開編輯視窗
   document.getElementById("editModal")
     .style.display = "flex";
+
 }
 
-  document
+
+// =========================
+// 課程按鈕
+// =========================
+
+document
   .querySelectorAll(".editCourse")
   .forEach(function(button) {
 
@@ -562,24 +569,138 @@ function editStudent(id) {
 
   });
 
-  document
+
+// =========================
+// 取消編輯
+// =========================
+
+document
   .getElementById("cancelEdit")
   .addEventListener("click", function() {
 
     document.getElementById("editModal")
       .style.display = "none";
 
+    editingStudentId = null;
+
   });
 
 
-/* =========================
-   啟動
-========================= */
+// =========================
+// 儲存編輯
+// =========================
+
+document
+  .getElementById("saveEdit")
+  .addEventListener("click", function() {
+
+    if (!editingStudentId) {
+      alert("找不到正在編輯的學生");
+      return;
+    }
+
+    const name =
+      document.getElementById("editName")
+        .value.trim();
+
+    const grade =
+      document.getElementById("editGrade")
+        .value;
+
+    const status =
+      document.getElementById("editStatus")
+        .value;
+
+    const courses =
+      Array.from(
+        document.querySelectorAll(".editCourse.selected")
+      ).map(function(button) {
+        return button.textContent.trim();
+      });
+
+
+    // 檢查姓名
+    if (!name) {
+      alert("請輸入學生姓名");
+      return;
+    }
+
+    // 儲存中
+    const saveButton =
+      document.getElementById("saveEdit");
+
+    saveButton.disabled = true;
+    saveButton.textContent = "儲存中⋯";
+
+
+    fetch(GAS_URL, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+
+      body: JSON.stringify({
+
+        id: editingStudentId,
+        name: name,
+        grade: grade,
+        status: status,
+        courses: courses
+
+      })
+
+    })
+
+    .then(function(response) {
+      return response.json();
+    })
+
+    .then(function(data) {
+
+      if (!data.success) {
+        throw new Error(
+          data.message || "修改失敗"
+        );
+      }
+
+      alert("✅ 學生資料修改成功！");
+
+      document.getElementById("editModal")
+        .style.display = "none";
+
+      editingStudentId = null;
+
+      loadStudents();
+
+    })
+
+    .catch(function(error) {
+
+      alert("❌ 修改失敗");
+
+      console.error(error);
+
+    })
+
+    .finally(function() {
+
+      saveButton.disabled = false;
+      saveButton.textContent = "💾 儲存";
+
+    });
+
+  });
+
+
+// =========================
+// 啟動
+// =========================
 
 loadStudents();
 
 </script>
-
   <!-- =========================
      編輯學生視窗
 ========================= -->
