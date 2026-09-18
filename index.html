@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>學生名單</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f7f7f7;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      color: #333;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .courses {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .course {
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .course.selected {
+      background: #eee;
+      border-color: #999;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #333;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+    }
+
+    #message {
+      margin-top: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🧑‍🎓 學生名單</h1>
+
+  <div class="card">
+
+    <label>👤 姓名</label>
+    <input id="name" type="text" placeholder="請輸入學生姓名">
+
+    <label>🎓 年級</label>
+    <select id="grade">
+      <option value="">請選擇年級</option>
+      <option>一年級</option>
+      <option>二年級</option>
+      <option>三年級</option>
+      <option>四年級</option>
+      <option>五年級</option>
+      <option>六年級</option>
+      <option>國一</option>
+      <option>國二</option>
+      <option>國三</option>
+    </select>
+
+    <label>🟢 狀態</label>
+    <select id="status">
+      <option>🟢 上課中</option>
+      <option>🟡 暫停</option>
+      <option>🔴 結束</option>
+    </select>
+
+    <label>📚 上課課程</label>
+
+    <div class="courses">
+
+      <div class="course" data-course="英文">英文</div>
+      <div class="course" data-course="數學">數學</div>
+      <div class="course" data-course="課輔">課輔</div>
+      <div class="course" data-course="理化">理化</div>
+      <div class="course" data-course="私中英文">私中英文</div>
+      <div class="course" data-course="私中數學">私中數學</div>
+      <div class="course" data-course="私中國文">私中國文</div>
+
+    </div>
+
+    <button id="addButton">➕ 新增學生</button>
+
+    <div id="message"></div>
+
+  </div>
+
+</div>
+
+<script>
+
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbyv3-omK-QEzQUOxo8btegugZwM3TuuAHCEdZMWWA-RecRakp6b84BfEh2vZ17evAnddA/exec";
+
+
+const courseButtons =
+  document.querySelectorAll(".course");
+
+
+courseButtons.forEach(function(button) {
+
+  button.addEventListener("click", function() {
+
+    button.classList.toggle("selected");
+
+  });
+
+});
+
+
+document
+  .getElementById("addButton")
+  .addEventListener("click", function() {
+
+    const name =
+      document.getElementById("name").value.trim();
+
+    const grade =
+      document.getElementById("grade").value;
+
+    const status =
+      document.getElementById("status").value;
+
+    const courses =
+      Array.from(
+        document.querySelectorAll(".course.selected")
+      ).map(function(button) {
+        return button.dataset.course;
+      });
+
+
+    if (!name) {
+      alert("請輸入學生姓名");
+      return;
+    }
+
+
+    if (!grade) {
+      alert("請選擇年級");
+      return;
+    }
+
+
+    if (courses.length === 0) {
+      alert("請至少選擇一個課程");
+      return;
+    }
+
+
+    const data = {
+      name: name,
+      grade: grade,
+      status: status,
+      courses: courses
+    };
+
+
+    const button =
+      document.getElementById("addButton");
+
+    button.disabled = true;
+    button.textContent = "新增中⋯";
+
+
+    fetch(GAS_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function() {
+
+      document.getElementById("message").textContent =
+        "✅ 學生新增成功！";
+
+      document.getElementById("name").value = "";
+
+      document.getElementById("grade").value = "";
+
+      courseButtons.forEach(function(button) {
+        button.classList.remove("selected");
+      });
+
+    })
+    .catch(function(error) {
+
+      document.getElementById("message").textContent =
+        "❌ 新增失敗，請稍後再試";
+
+      console.error(error);
+
+    })
+    .finally(function() {
+
+      button.disabled = false;
+      button.textContent = "➕ 新增學生";
+
+    });
+
+  });
+
+</script>
+
+</body>
+</html>
