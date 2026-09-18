@@ -784,23 +784,47 @@ function renderStudents(students) {
         </div>
 
 
-        <button
-          onclick="editStudent('${student.id}')"
-          style="
-            width:auto;
-            margin-top:0;
-            border:none;
-            background:#f0f0f0;
-            color:#333;
-            padding:7px 12px;
-            border-radius:8px;
-            cursor:pointer;
-            font-size:14px;
-          "
-        >
-          ✏️ 編輯
-        </button>
+<div style="
+  display:flex;
+  gap:6px;
+  align-items:center;
+">
 
+  <button
+    onclick="editStudent('${student.id}')"
+    style="
+      width:auto;
+      margin-top:0;
+      border:none;
+      background:#f0f0f0;
+      color:#333;
+      padding:7px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:14px;
+    "
+  >
+    ✏️ 編輯
+  </button>
+
+  <button
+    onclick="deleteStudent('${student.id}')"
+    style="
+      width:auto;
+      margin-top:0;
+      border:none;
+      background:#ffecec;
+      color:#d33;
+      padding:7px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:14px;
+    "
+  >
+    🗑️ 刪除
+  </button>
+
+</div>
       </div>
 
 
