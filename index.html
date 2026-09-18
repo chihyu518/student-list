@@ -273,6 +273,78 @@ document
 
   });
 
+  function loadStudents() {
+
+  const studentList =
+    document.getElementById("studentList");
+
+  studentList.textContent = "載入中⋯";
+
+  fetch(GAS_URL)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+
+      if (!data.success) {
+        throw new Error(data.message || "讀取失敗");
+      }
+
+      if (data.students.length === 0) {
+        studentList.textContent = "目前沒有學生資料";
+        return;
+      }
+
+      studentList.innerHTML = "";
+
+      data.students.forEach(function(student) {
+
+        const card = document.createElement("div");
+
+        card.style.padding = "14px";
+        card.style.marginBottom = "10px";
+        card.style.border = "1px solid #eee";
+        card.style.borderRadius = "12px";
+        card.style.background = "#fafafa";
+
+        card.innerHTML = `
+          <div style="font-size:18px;font-weight:bold;">
+            ${student.name}
+          </div>
+
+          <div style="margin-top:6px;">
+            🎓 ${student.grade || "未設定"}
+          </div>
+
+          <div style="margin-top:6px;">
+            ${student.status || "⚪ 未設定"}
+          </div>
+
+          <div style="margin-top:6px;">
+            📚 ${student.courses.length > 0
+              ? student.courses.join("、")
+              : "未設定"}
+          </div>
+        `;
+
+        studentList.appendChild(card);
+
+      });
+
+    })
+    .catch(function(error) {
+
+      studentList.textContent =
+        "❌ 無法取得學生資料";
+
+      console.error(error);
+
+    });
+}
+
+
+loadStudents();
+  
 </script>
 
 </body>
