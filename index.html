@@ -1093,7 +1093,7 @@ students.sort(function(a, b) {
    搜尋＋年級＋狀態＋課程篩選
 ========================= */
 
-  window.showStudentDetail = function(id) {
+window.showStudentDetail = function(id) {
 
   const student =
     allStudents.find(function(student) {
@@ -1105,73 +1105,22 @@ students.sort(function(a, b) {
     return;
   }
 
-  alert(
-    "👤 姓名：" + student.name +
-    "\n🎓 年級：" + student.grade +
-    "\n🟢 狀態：" + student.status +
-    "\n📚 課程：" +
-    ((student.courses || []).join("、") || "尚未設定")
-  );
+  document.getElementById("detailName").textContent =
+    student.name;
 
-}
-  
-function filterStudents() {
+  document.getElementById("detailGrade").textContent =
+    student.grade || "尚未設定";
 
-  const keyword =
-    document
-      .getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
+  document.getElementById("detailStatus").textContent =
+    student.status || "尚未設定";
 
-  const grade =
-    document
-      .getElementById("gradeFilter")
-      .value;
+  document.getElementById("detailCourses").textContent =
+    (student.courses || []).join("、") || "尚未設定";
 
-  const status =
-    document
-      .getElementById("statusFilter")
-      .value;
+  document.getElementById("studentDetailModal").style.display =
+    "flex";
 
-  const course =
-    document
-      .getElementById("courseFilter")
-      .value;
-
-  const filteredStudents =
-    allStudents.filter(function(student) {
-
-      const nameMatch =
-        (student.name || "")
-          .toLowerCase()
-          .includes(keyword);
-
-      const gradeMatch =
-        !grade ||
-        student.grade === grade;
-
-      const statusMatch =
-        !status ||
-        student.status === status;
-
-      const courseMatch =
-        !course ||
-        (student.courses || []).includes(course);
-
-      return (
-        nameMatch &&
-        gradeMatch &&
-        statusMatch &&
-        courseMatch
-      );
-
-    });
-
-  renderStudents(filteredStudents);
-  updateStudentStats(filteredStudents);
-  updateCourseStats(filteredStudents);
-}
+};
   function updateStudentStats(students) {
 
   document.getElementById("totalCount").textContent =
