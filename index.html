@@ -895,6 +895,99 @@ document
    開啟編輯視窗
 ========================= */
 
+  /* =========================
+   刪除學生
+========================= */
+
+function deleteStudent(id) {
+
+  const student =
+    allStudents.find(function(student) {
+      return student.id === id;
+    });
+
+
+  if (!student) {
+
+    alert("找不到學生資料");
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+      "確定要刪除「" +
+      student.name +
+      "」嗎？\n\n刪除後會從學生名單中移除。"
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  fetch(GAS_URL, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type":
+        "text/plain;charset=utf-8"
+    },
+
+    body: JSON.stringify({
+
+      action: "delete",
+
+      id: id
+
+    })
+
+  })
+
+  .then(function(response) {
+
+    return response.json();
+
+  })
+
+  .then(function(data) {
+
+    if (!data.success) {
+
+      throw new Error(
+        data.message || "刪除失敗"
+      );
+
+    }
+
+
+    alert(
+      "✅ 「" +
+      student.name +
+      "」已刪除！"
+    );
+
+
+    loadStudents();
+
+  })
+
+  .catch(function(error) {
+
+    alert("❌ 刪除失敗");
+
+    console.error(error);
+
+  });
+
+}
+  
 function editStudent(id) {
 
 
