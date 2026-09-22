@@ -1710,6 +1710,172 @@ loadStudents();
 
 </script>
 
+  <!-- =========================
+     學生詳細資料視窗
+========================= -->
+
+<div
+  id="studentDetailModal"
+  style="
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.45);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  "
+>
+
+  <div
+    style="
+      width:100%;
+      max-width:420px;
+      background:white;
+      border-radius:18px;
+      padding:24px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    "
+  >
+
+    <!-- 標題 -->
+    <div
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:20px;
+      "
+    >
+
+      <div
+        style="
+          font-size:22px;
+          font-weight:bold;
+        "
+      >
+        📋 學生資料
+      </div>
+
+      <button
+        id="closeStudentDetail"
+        style="
+          border:none;
+          background:#f5f5f5;
+          width:36px;
+          height:36px;
+          border-radius:50%;
+          font-size:20px;
+          cursor:pointer;
+        "
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <!-- 學生姓名 -->
+    <div
+      id="detailName"
+      style="
+        font-size:24px;
+        font-weight:bold;
+        margin-bottom:18px;
+      "
+    >
+    </div>
+
+
+    <!-- 年級 -->
+    <div
+      style="
+        padding:12px;
+        background:#f8f8f8;
+        border-radius:10px;
+        margin-bottom:10px;
+      "
+    >
+      🎓 年級：
+      <span id="detailGrade"></span>
+    </div>
+
+
+    <!-- 狀態 -->
+    <div
+      style="
+        padding:12px;
+        background:#f8f8f8;
+        border-radius:10px;
+        margin-bottom:10px;
+      "
+    >
+      🟢 狀態：
+      <span id="detailStatus"></span>
+    </div>
+
+
+    <!-- 課程 -->
+    <div
+      style="
+        padding:12px;
+        background:#f8f8f8;
+        border-radius:10px;
+        margin-bottom:20px;
+      "
+    >
+      📚 上課課程：
+      <span id="detailCourses"></span>
+    </div>
+
+
+    <!-- 按鈕 -->
+    <div
+      style="
+        display:flex;
+        gap:10px;
+      "
+    >
+
+      <button
+        id="detailEditButton"
+        style="
+          flex:1;
+          padding:13px;
+          border:none;
+          border-radius:10px;
+          background:#eeeeee;
+          font-size:16px;
+          cursor:pointer;
+        "
+      >
+        ✏️ 編輯
+      </button>
+
+      <button
+        id="detailDeleteButton"
+        style="
+          flex:1;
+          padding:13px;
+          border:none;
+          border-radius:10px;
+          background:#eeeeee;
+          font-size:16px;
+          cursor:pointer;
+        "
+      >
+        🗑️ 刪除
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 </body>
 
