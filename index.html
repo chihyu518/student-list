@@ -936,7 +936,7 @@ function renderStudents(students) {
 ========================= */
 
 /* =========================
-   搜尋＋年級＋狀態篩選
+   搜尋＋年級＋狀態＋課程篩選
 ========================= */
 
 function filterStudents() {
@@ -958,6 +958,11 @@ function filterStudents() {
       .getElementById("statusFilter")
       .value;
 
+  const course =
+    document
+      .getElementById("courseFilter")
+      .value;
+
   const filteredStudents =
     allStudents.filter(function(student) {
 
@@ -974,10 +979,15 @@ function filterStudents() {
         !status ||
         student.status === status;
 
+      const courseMatch =
+        !course ||
+        (student.courses || []).includes(course);
+
       return (
         nameMatch &&
         gradeMatch &&
-        statusMatch
+        statusMatch &&
+        courseMatch
       );
 
     });
@@ -1008,7 +1018,7 @@ document
   );
 
 document
-  .getElementById("gradeFilter")
+  .getElementById("courseFilter")
   .addEventListener(
     "change",
     filterStudents
