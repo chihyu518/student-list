@@ -901,14 +901,22 @@ function renderStudents(students) {
     "國三"
   ];
 
-  students.sort(function(a, b) {
+students.sort(function(a, b) {
 
-    return (
-      gradeOrder.indexOf(a.grade) -
-      gradeOrder.indexOf(b.grade)
-    );
+  const gradeCompare =
+    gradeOrder.indexOf(a.grade) -
+    gradeOrder.indexOf(b.grade);
 
-  });
+  if (gradeCompare !== 0) {
+    return gradeCompare;
+  }
+
+  return (a.name || "").localeCompare(
+    b.name || "",
+    "zh-Hant"
+  );
+
+});
   
     // =========================
   // 學生人數統計
