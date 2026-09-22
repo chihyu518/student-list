@@ -322,6 +322,84 @@
   <option value="私中數學">私中數學</option>
   <option value="私中國文">私中國文</option>
 </select>
+
+    <div
+  id="studentStats"
+  style="
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+    margin-bottom:15px;
+  "
+>
+  <div
+    style="
+      padding:15px;
+      background:#f5f5f5;
+      border-radius:12px;
+      text-align:center;
+    "
+  >
+    <div style="font-size:14px;">👥 全部學生</div>
+    <div
+      id="totalCount"
+      style="font-size:26px;font-weight:bold;"
+    >
+      0
+    </div>
+  </div>
+
+  <div
+    style="
+      padding:15px;
+      background:#f5f5f5;
+      border-radius:12px;
+      text-align:center;
+    "
+  >
+    <div style="font-size:14px;">🟢 上課中</div>
+    <div
+      id="activeCount"
+      style="font-size:26px;font-weight:bold;"
+    >
+      0
+    </div>
+  </div>
+
+  <div
+    style="
+      padding:15px;
+      background:#f5f5f5;
+      border-radius:12px;
+      text-align:center;
+    "
+  >
+    <div style="font-size:14px;">🟡 暫停</div>
+    <div
+      id="pauseCount"
+      style="font-size:26px;font-weight:bold;"
+    >
+      0
+    </div>
+  </div>
+
+  <div
+    style="
+      padding:15px;
+      background:#f5f5f5;
+      border-radius:12px;
+      text-align:center;
+    "
+  >
+    <div style="font-size:14px;">🔴 結束</div>
+    <div
+      id="endCount"
+      style="font-size:26px;font-weight:bold;"
+    >
+      0
+    </div>
+  </div>
+</div>
     
     <div id="studentList">
       載入中⋯
