@@ -880,6 +880,40 @@ function loadStudents() {
 
 function renderStudents(students) {
 
+    // =========================
+  // 學生人數統計
+  // =========================
+
+  const totalCount =
+    document.getElementById("totalCount");
+
+  const activeCount =
+    document.getElementById("activeCount");
+
+  const pauseCount =
+    document.getElementById("pauseCount");
+
+  const endCount =
+    document.getElementById("endCount");
+
+  totalCount.textContent =
+    students.length;
+
+  activeCount.textContent =
+    students.filter(function(student) {
+      return student.status === "🟢 上課中";
+    }).length;
+
+  pauseCount.textContent =
+    students.filter(function(student) {
+      return student.status === "🟡 暫停";
+    }).length;
+
+  endCount.textContent =
+    students.filter(function(student) {
+      return student.status === "🔴 結束";
+    }).length;
+  
 
   const studentList =
     document.getElementById("studentList");
