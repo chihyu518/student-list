@@ -283,4 +283,1764 @@
       <option value="國一">國一</option>
       <option value="國二">國二</option>
       <option value="國三">國三</option>
+
+    </select>
+
+
+    <select
+      id="statusFilter"
+      style="
+        width:100%;
+        padding:12px;
+        margin-bottom:12px;
+        border:1px solid #ddd;
+        border-radius:10px;
+        font-size:16px;
+      "
+    >
+
+      <option value="">🟢 全部狀態</option>
+
+      <option value="🟢 上課中">🟢 上課中</option>
+      <option value="🟡 暫停">🟡 暫停</option>
+      <option value="🔴 結束">🔴 結束</option>
+
+    </select>
+
+
+    <select
+      id="courseFilter"
+      style="
+        width:100%;
+        padding:12px;
+        margin-bottom:12px;
+        border:1px solid #ddd;
+        border-radius:10px;
+        font-size:16px;
+      "
+    >
+
+      <option value="">📚 全部課程</option>
+
+      <option value="英文">英文</option>
+      <option value="數學">數學</option>
+      <option value="課輔">課輔</option>
+      <option value="理化">理化</option>
+      <option value="私中英文">私中英文</option>
+      <option value="私中數學">私中數學</option>
+      <option value="私中國文">私中國文</option>
+
+    </select>
+
+
+    <!-- =========================
+         學生統計
+    ========================= -->
+
+    <div
+      id="studentStats"
+      style="
+        display:grid;
+        grid-template-columns:repeat(2, 1fr);
+        gap:10px;
+        margin-bottom:15px;
+      "
+    >
+
+      <div
+        style="
+          padding:15px;
+          background:#f5f5f5;
+          border-radius:12px;
+          text-align:center;
+        "
+      >
+
+        <div style="font-size:14px;">
+          👥 全部學生
+        </div>
+
+        <div
+          id="totalCount"
+          style="font-size:26px;font-weight:bold;"
+        >
+          0
+        </div>
+
+      </div>
+
+
+      <div
+        style="
+          padding:15px;
+          background:#f5f5f5;
+          border-radius:12px;
+          text-align:center;
+        "
+      >
+
+        <div style="font-size:14px;">
+          🟢 上課中
+        </div>
+
+        <div
+          id="activeCount"
+          style="font-size:26px;font-weight:bold;"
+        >
+          0
+        </div>
+
+      </div>
+
+
+      <div
+        style="
+          padding:15px;
+          background:#f5f5f5;
+          border-radius:12px;
+          text-align:center;
+        "
+      >
+
+        <div style="font-size:14px;">
+          🟡 暫停
+        </div>
+
+        <div
+          id="pauseCount"
+          style="font-size:26px;font-weight:bold;"
+        >
+          0
+        </div>
+
+      </div>
+
+
+      <div
+        style="
+          padding:15px;
+          background:#f5f5f5;
+          border-radius:12px;
+          text-align:center;
+        "
+      >
+
+        <div style="font-size:14px;">
+          🔴 結束
+        </div>
+
+        <div
+          id="endCount"
+          style="font-size:26px;font-weight:bold;"
+        >
+          0
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         課程統計
+    ========================= -->
+
+    <div
+      id="courseStats"
+      style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+        margin-bottom:15px;
+      "
+    >
+    </div>
+
+
+    <div id="studentList">
+      載入中⋯
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     編輯學生視窗
+========================= -->
+
+<div
+  id="editModal"
+  style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    z-index:9999;
+    padding:20px;
+    align-items:center;
+    justify-content:center;
+  "
+>
+
+  <div
+    style="
+      width:100%;
+      max-width:420px;
+      max-height:90vh;
+      overflow-y:auto;
+      background:white;
+      border-radius:18px;
+      padding:22px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    "
+  >
+
+    <h2
+      style="
+        margin-top:0;
+        margin-bottom:20px;
+      "
+    >
+      ✏️ 編輯學生
+    </h2>
+
+
+    <label>👤 姓名</label>
+
+    <input
+      id="editName"
+      type="text"
+      placeholder="請輸入學生姓名"
+    >
+
+
+    <label>🎓 年級</label>
+
+    <select id="editGrade">
+
+      <option value="">請選擇年級</option>
+
+      <option>一年級</option>
+      <option>二年級</option>
+      <option>三年級</option>
+      <option>四年級</option>
+      <option>五年級</option>
+      <option>六年級</option>
+
+      <option>國一</option>
+      <option>國二</option>
+      <option>國三</option>
+
+    </select>
+
+
+    <label>🟢 狀態</label>
+
+    <select id="editStatus">
+
+      <option value="">請選擇狀態</option>
+
+      <option>🟢 上課中</option>
+      <option>🟡 暫停</option>
+      <option>🔴 結束</option>
+
+    </select>
+
+
+    <label>📚 上課課程</label>
+
+    <div
+      style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+        margin-top:8px;
+        margin-bottom:20px;
+      "
+    >
+
+      <button
+        type="button"
+        class="editCourse"
+      >
+        英文
+      </button>
+
+      <button
+        type="button"
+        class="editCourse"
+      >
+        數學
+      </button>
+
+      <button
+        type="button"
+        class="editCourse"
+      >
+        課輔
+      </button>
+
+      <button
+        type="button"
+        class="editCourse"
+      >
+        理化
+      </button>
+
+      <button
+        type="button"
+        class="editCourse"
+      >
+        私中英文
+      </button>
+
+      <button
+        type="button"
+        class="editCourse"
+      >
+        私中數學
+      </button>
+
+      <button
+        type="button"
+        class="editCourse"
+      >
+        私中國文
+      </button>
+
+    </div>
+
+
+    <div
+      style="
+        display:flex;
+        gap:10px;
+      "
+    >
+
+      <button
+        type="button"
+        id="cancelEdit"
+        style="
+          flex:1;
+          width:auto;
+          margin-top:0;
+          padding:12px;
+          border:none;
+          border-radius:10px;
+          background:#eee;
+          color:#333;
+          font-size:16px;
+        "
+      >
+        取消
+      </button>
+
+
+      <button
+        type="button"
+        id="saveEdit"
+        style="
+          flex:1;
+          width:auto;
+          margin-top:0;
+          padding:12px;
+          border:none;
+          border-radius:10px;
+          background:#333;
+          color:white;
+          font-size:16px;
+        "
+      >
+        💾 儲存
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     學生詳細資料視窗
+========================= -->
+
+<div
+  id="studentDetailModal"
+  style="
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.45);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  "
+>
+
+  <div
+    style="
+      width:100%;
+      max-width:420px;
+      background:white;
+      border-radius:18px;
+      padding:24px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    "
+  >
+
+    <div
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:20px;
+      "
+    >
+
+      <div
+        style="
+          font-size:22px;
+          font-weight:bold;
+        "
+      >
+        📋 學生資料
+      </div>
+
+
+      <button
+        type="button"
+        id="closeStudentDetail"
+        style="
+          border:none;
+          background:#f5f5f5;
+          width:36px;
+          height:36px;
+          border-radius:50%;
+          font-size:20px;
+          cursor:pointer;
+          margin-top:0;
+          padding:0;
+          color:#333;
+        "
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div
+      id="detailName"
+      style="
+        font-size:24px;
+        font-weight:bold;
+        margin-bottom:18px;
+      "
+    >
+    </div>
+
+
+    <div
+      style="
+        padding:12px;
+        background:#f8f8f8;
+        border-radius:10px;
+        margin-bottom:10px;
+      "
+    >
+      🎓 年級：
+      <span id="detailGrade"></span>
+    </div>
+
+
+    <div
+      style="
+        padding:12px;
+        background:#f8f8f8;
+        border-radius:10px;
+        margin-bottom:10px;
+      "
+    >
+      🟢 狀態：
+      <span id="detailStatus"></span>
+    </div>
+
+
+    <div
+      style="
+        padding:12px;
+        background:#f8f8f8;
+        border-radius:10px;
+        margin-bottom:20px;
+      "
+    >
+      📚 上課課程：
+      <span id="detailCourses"></span>
+    </div>
+
+
+    <div
+      style="
+        display:flex;
+        gap:10px;
+      "
+    >
+
+      <button
+        type="button"
+        id="detailEditButton"
+        style="
+          flex:1;
+          width:auto;
+          margin-top:0;
+          padding:13px;
+          border:none;
+          border-radius:10px;
+          background:#eeeeee;
+          color:#333;
+          font-size:16px;
+          cursor:pointer;
+        "
+      >
+        ✏️ 編輯
+      </button>
+
+
+      <button
+        type="button"
+        id="detailDeleteButton"
+        style="
+          flex:1;
+          width:auto;
+          margin-top:0;
+          padding:13px;
+          border:none;
+          border-radius:10px;
+          background:#eeeeee;
+          color:#333;
+          font-size:16px;
+          cursor:pointer;
+        "
+      >
+        🗑️ 刪除
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbyv3-omK-QEzQUOxo8btegugZwM3TuuAHCEdZMWWA-RecRakp6b84BfEh2vZ17evAnddA/exec";
+
+
+/* =========================
+   學生資料
+========================= */
+
+let allStudents = [];
+
+let editingStudentId = null;
+
+let detailStudentId = null;
+
+
+/* =========================
+   新增學生課程按鈕
+========================= */
+
+const courseButtons =
+  document.querySelectorAll(".course");
+
+
+courseButtons.forEach(function(button) {
+
+  button.addEventListener("click", function() {
+
+    button.classList.toggle("selected");
+
+  });
+
+});
+
+
+/* =========================
+   新增學生
+========================= */
+
+document
+  .getElementById("addButton")
+  .addEventListener("click", function() {
+
+    const name =
+      document
+        .getElementById("name")
+        .value
+        .trim();
+
+
+    const grade =
+      document
+        .getElementById("grade")
+        .value;
+
+
+    const status =
+      document
+        .getElementById("status")
+        .value;
+
+
+    const courses =
+      Array.from(
+        document.querySelectorAll(".course.selected")
+      )
+      .map(function(button) {
+
+        return button.dataset.course;
+
+      });
+
+
+    if (!name) {
+
+      alert("請輸入學生姓名");
+
+      return;
+
+    }
+
+
+    if (!grade) {
+
+      alert("請選擇年級");
+
+      return;
+
+    }
+
+
+    if (courses.length === 0) {
+
+      alert("請至少選擇一個課程");
+
+      return;
+
+    }
+
+
+    const data = {
+
+      name: name,
+
+      grade: grade,
+
+      status: status,
+
+      courses: courses
+
+    };
+
+
+    const button =
+      document.getElementById("addButton");
+
+
+    button.disabled = true;
+
+    button.textContent = "新增中⋯";
+
+
+    fetch(GAS_URL, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type":
+          "text/plain;charset=utf-8"
+      },
+
+      body: JSON.stringify(data)
+
+    })
+
+    .then(function(response) {
+
+      return response.json();
+
+    })
+
+    .then(function(data) {
+
+      if (!data.success) {
+
+        throw new Error(
+          data.message || "新增失敗"
+        );
+
+      }
+
+
+      document
+        .getElementById("message")
+        .textContent =
+          "✅ 學生新增成功！";
+
+
+      document
+        .getElementById("name")
+        .value = "";
+
+
+      document
+        .getElementById("grade")
+        .value = "";
+
+
+      courseButtons.forEach(function(button) {
+
+        button.classList.remove("selected");
+
+      });
+
+
+      loadStudents();
+
+    })
+
+    .catch(function(error) {
+
+      document
+        .getElementById("message")
+        .textContent =
+          "❌ 新增失敗，請稍後再試";
+
+
+      console.error(error);
+
+    })
+
+    .finally(function() {
+
+      button.disabled = false;
+
+      button.textContent =
+        "➕ 新增學生";
+
+    });
+
+  });
+
+
+/* =========================
+   讀取學生
+========================= */
+
+function loadStudents() {
+
+  const studentList =
+    document.getElementById("studentList");
+
+
+  studentList.textContent =
+    "載入中⋯";
+
+
+  fetch(GAS_URL)
+
+    .then(function(response) {
+
+      return response.json();
+
+    })
+
+    .then(function(data) {
+
+      if (!data.success) {
+
+        throw new Error(
+          data.message || "讀取失敗"
+        );
+
+      }
+
+
+      allStudents =
+        data.students || [];
+
+
+      renderStudents(allStudents);
+
+      updateStudentStats(allStudents);
+
+      updateCourseStats(allStudents);
+
+    })
+
+    .catch(function(error) {
+
+      studentList.textContent =
+        "❌ 無法取得學生資料";
+
+
+      console.error(error);
+
+    });
+
+}
+
+
+/* =========================
+   顯示學生
+========================= */
+
+function renderStudents(students) {
+
+  const gradeOrder = [
+
+    "一年級",
+    "二年級",
+    "三年級",
+    "四年級",
+    "五年級",
+    "六年級",
+    "國一",
+    "國二",
+    "國三"
+
+  ];
+
+
+  students.sort(function(a, b) {
+
+    const gradeCompare =
+      gradeOrder.indexOf(a.grade) -
+      gradeOrder.indexOf(b.grade);
+
+
+    if (gradeCompare !== 0) {
+
+      return gradeCompare;
+
+    }
+
+
+    return (a.name || "").localeCompare(
+      b.name || "",
+      "zh-Hant"
+    );
+
+  });
+
+
+  const studentList =
+    document.getElementById("studentList");
+
+
+  studentList.innerHTML = "";
+
+
+  if (students.length === 0) {
+
+    studentList.textContent =
+      "找不到符合的學生";
+
+    return;
+
+  }
+
+
+  students.forEach(function(student) {
+
+    const card =
+      document.createElement("div");
+
+
+    card.style.padding = "14px";
+
+    card.style.marginBottom = "10px";
+
+    card.style.border =
+      "1px solid #eee";
+
+    card.style.borderRadius =
+      "12px";
+
+    card.style.background =
+      "#fafafa";
+
+
+    card.innerHTML = `
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:10px;
+      ">
+
+        <div
+          style="
+            font-size:18px;
+            font-weight:bold;
+            cursor:pointer;
+          "
+          onclick="showStudentDetail('${student.id}')"
+        >
+          ${student.name}
+        </div>
+
+
+        <div style="
+          display:flex;
+          gap:6px;
+          align-items:center;
+        ">
+
+          <button
+            type="button"
+            onclick="editStudent('${student.id}')"
+            style="
+              width:auto;
+              margin-top:0;
+              border:none;
+              background:#f0f0f0;
+              color:#333;
+              padding:7px 12px;
+              border-radius:8px;
+              cursor:pointer;
+              font-size:14px;
+            "
+          >
+            ✏️ 編輯
+          </button>
+
+
+          <button
+            type="button"
+            onclick="deleteStudent('${student.id}')"
+            style="
+              width:auto;
+              margin-top:0;
+              border:none;
+              background:#ffecec;
+              color:#d33;
+              padding:7px 12px;
+              border-radius:8px;
+              cursor:pointer;
+              font-size:14px;
+            "
+          >
+            🗑️ 刪除
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div style="margin-top:6px;">
+        🎓 ${student.grade || "未設定"}
+      </div>
+
+
+      <div style="margin-top:6px;">
+        ${student.status || "⚪ 未設定"}
+      </div>
+
+
+      <div style="margin-top:6px;">
+        📚 ${
+          student.courses &&
+          student.courses.length > 0
+            ? student.courses.join("、")
+            : "未設定"
+        }
+      </div>
+
+    `;
+
+
+    studentList.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   搜尋＋篩選
+========================= */
+
+function filterStudents() {
+
+  const keyword =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const grade =
+    document
+      .getElementById("gradeFilter")
+      .value;
+
+
+  const status =
+    document
+      .getElementById("statusFilter")
+      .value;
+
+
+  const course =
+    document
+      .getElementById("courseFilter")
+      .value;
+
+
+  const filteredStudents =
+    allStudents.filter(function(student) {
+
+      const nameMatch =
+        (student.name || "")
+          .toLowerCase()
+          .includes(keyword);
+
+
+      const gradeMatch =
+        !grade ||
+        student.grade === grade;
+
+
+      const statusMatch =
+        !status ||
+        student.status === status;
+
+
+      const courseMatch =
+        !course ||
+        (student.courses || []).includes(course);
+
+
+      return (
+        nameMatch &&
+        gradeMatch &&
+        statusMatch &&
+        courseMatch
+      );
+
+    });
+
+
+  renderStudents(filteredStudents);
+
+  updateStudentStats(filteredStudents);
+
+  updateCourseStats(filteredStudents);
+
+}
+
+
+/* =========================
+   學生詳細資料
+========================= */
+
+window.showStudentDetail = function(id) {
+
+  const student =
+    allStudents.find(function(student) {
+
+      return student.id === id;
+
+    });
+
+
+  if (!student) {
+
+    alert("找不到學生資料");
+
+    return;
+
+  }
+
+
+  detailStudentId = id;
+
+
+  document
+    .getElementById("detailName")
+    .textContent =
+      student.name;
+
+
+  document
+    .getElementById("detailGrade")
+    .textContent =
+      student.grade || "尚未設定";
+
+
+  document
+    .getElementById("detailStatus")
+    .textContent =
+      student.status || "尚未設定";
+
+
+  document
+    .getElementById("detailCourses")
+    .textContent =
+      (student.courses || []).join("、") ||
+      "尚未設定";
+
+
+  document
+    .getElementById("studentDetailModal")
+    .style.display =
+      "flex";
+
+};
+
+
+/* =========================
+   學生統計
+========================= */
+
+function updateStudentStats(students) {
+
+  document
+    .getElementById("totalCount")
+    .textContent =
+      students.length;
+
+
+  document
+    .getElementById("activeCount")
+    .textContent =
+      students.filter(function(student) {
+
+        return student.status === "🟢 上課中";
+
+      }).length;
+
+
+  document
+    .getElementById("pauseCount")
+    .textContent =
+      students.filter(function(student) {
+
+        return student.status === "🟡 暫停";
+
+      }).length;
+
+
+  document
+    .getElementById("endCount")
+    .textContent =
+      students.filter(function(student) {
+
+        return student.status === "🔴 結束";
+
+      }).length;
+
+}
+
+
+/* =========================
+   課程統計
+========================= */
+
+function updateCourseStats(students) {
+
+  const courses = [
+
+    "英文",
+    "數學",
+    "課輔",
+    "理化",
+    "私中英文",
+    "私中數學",
+    "私中國文"
+
+  ];
+
+
+  const courseStats =
+    document.getElementById("courseStats");
+
+
+  if (!courseStats) {
+
+    return;
+
+  }
+
+
+  courseStats.innerHTML = "";
+
+
+  courses.forEach(function(course) {
+
+    const count =
+      students.filter(function(student) {
+
+        return (student.courses || [])
+          .includes(course);
+
+      }).length;
+
+
+    const box =
+      document.createElement("div");
+
+
+    box.style.padding =
+      "10px 14px";
+
+    box.style.background =
+      "#f5f5f5";
+
+    box.style.borderRadius =
+      "10px";
+
+    box.style.fontSize =
+      "14px";
+
+
+    box.textContent =
+      "📚 " +
+      course +
+      " " +
+      count +
+      "人";
+
+
+    courseStats.appendChild(box);
+
+  });
+
+}
+
+
+/* =========================
+   搜尋與篩選事件
+========================= */
+
+document
+  .getElementById("searchInput")
+  .addEventListener(
+    "input",
+    filterStudents
+  );
+
+
+document
+  .getElementById("gradeFilter")
+  .addEventListener(
+    "change",
+    filterStudents
+  );
+
+
+document
+  .getElementById("statusFilter")
+  .addEventListener(
+    "change",
+    filterStudents
+  );
+
+
+document
+  .getElementById("courseFilter")
+  .addEventListener(
+    "change",
+    filterStudents
+  );
+
+
+/* =========================
+   刪除學生
+========================= */
+
+window.deleteStudent = function(id) {
+
+  const student =
+    allStudents.find(function(student) {
+
+      return student.id === id;
+
+    });
+
+
+  if (!student) {
+
+    alert("找不到學生資料");
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+      "確定要刪除「" +
+      student.name +
+      "」嗎？\n\n刪除後會從學生名單中移除。"
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  fetch(GAS_URL, {
+
+    method: "POST",
+
+    headers: {
+
+      "Content-Type":
+        "text/plain;charset=utf-8"
+
+    },
+
+    body: JSON.stringify({
+
+      action: "delete",
+
+      id: id
+
+    })
+
+  })
+
+  .then(function(response) {
+
+    return response.json();
+
+  })
+
+  .then(function(data) {
+
+    if (!data.success) {
+
+      throw new Error(
+        data.message || "刪除失敗"
+      );
+
+    }
+
+
+    alert(
+      "✅ 「" +
+      student.name +
+      "」已刪除！"
+    );
+
+
+    document
+      .getElementById("studentDetailModal")
+      .style.display =
+        "none";
+
+
+    detailStudentId = null;
+
+
+    loadStudents();
+
+  })
+
+  .catch(function(error) {
+
+    alert(
+      "❌ 刪除失敗\n\n" +
+      error.message
+    );
+
+
+    console.error(error);
+
+  });
+
+};
+
+
+/* =========================
+   開啟編輯視窗
+========================= */
+
+window.editStudent = function(id) {
+
+  const student =
+    allStudents.find(function(student) {
+
+      return student.id === id;
+
+    });
+
+
+  if (!student) {
+
+    alert("找不到學生資料");
+
+    return;
+
+  }
+
+
+  editingStudentId = id;
+
+
+  document
+    .getElementById("editName")
+    .value =
+      student.name || "";
+
+
+  document
+    .getElementById("editGrade")
+    .value =
+      student.grade || "";
+
+
+  document
+    .getElementById("editStatus")
+    .value =
+      student.status || "";
+
+
+  const courses =
+    student.courses || [];
+
+
+  document
+    .querySelectorAll(".editCourse")
+    .forEach(function(button) {
+
+      const course =
+        button.textContent.trim();
+
+
+      if (courses.includes(course)) {
+
+        button.classList.add("selected");
+
+      } else {
+
+        button.classList.remove("selected");
+
+      }
+
+    });
+
+
+  document
+    .getElementById("editModal")
+    .style.display =
+      "flex";
+
+
+  document
+    .getElementById("studentDetailModal")
+    .style.display =
+      "none";
+
+};
+
+
+/* =========================
+   編輯視窗課程按鈕
+========================= */
+
+document
+  .querySelectorAll(".editCourse")
+  .forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+      this.classList.toggle("selected");
+
+    });
+
+  });
+
+
+/* =========================
+   取消編輯
+========================= */
+
+document
+  .getElementById("cancelEdit")
+  .addEventListener("click", function() {
+
+    document
+      .getElementById("editModal")
+      .style.display =
+        "none";
+
+
+    editingStudentId = null;
+
+  });
+
+
+/* =========================
+   儲存編輯
+========================= */
+
+document
+  .getElementById("saveEdit")
+  .addEventListener("click", function() {
+
+    if (!editingStudentId) {
+
+      alert("找不到正在編輯的學生");
+
+      return;
+
+    }
+
+
+    const name =
+      document
+        .getElementById("editName")
+        .value
+        .trim();
+
+
+    const grade =
+      document
+        .getElementById("editGrade")
+        .value;
+
+
+    const status =
+      document
+        .getElementById("editStatus")
+        .value;
+
+
+    const courses =
+      Array.from(
+        document.querySelectorAll(
+          ".editCourse.selected"
+        )
+      )
+      .map(function(button) {
+
+        return button.textContent.trim();
+
+      });
+
+
+    if (!name) {
+
+      alert("請輸入學生姓名");
+
+      return;
+
+    }
+
+
+    if (!grade) {
+
+      alert("請選擇年級");
+
+      return;
+
+    }
+
+
+    if (!status) {
+
+      alert("請選擇狀態");
+
+      return;
+
+    }
+
+
+    if (courses.length === 0) {
+
+      alert("請至少選擇一個課程");
+
+      return;
+
+    }
+
+
+    const saveButton =
+      document.getElementById("saveEdit");
+
+
+    saveButton.disabled = true;
+
+    saveButton.textContent =
+      "儲存中⋯";
+
+
+    fetch(GAS_URL, {
+
+      method: "POST",
+
+      headers: {
+
+        "Content-Type":
+          "text/plain;charset=utf-8"
+
+      },
+
+      body: JSON.stringify({
+
+        id: editingStudentId,
+
+        name: name,
+
+        grade: grade,
+
+        status: status,
+
+        courses: courses
+
+      })
+
+    })
+
+    .then(function(response) {
+
+      return response.json();
+
+    })
+
+    .then(function(data) {
+
+      if (!data.success) {
+
+        throw new Error(
+          data.message || "修改失敗"
+        );
+
+      }
+
+
+      alert(
+        "✅ 學生資料修改成功！"
+      );
+
+
+      document
+        .getElementById("editModal")
+        .style.display =
+          "none";
+
+
+      editingStudentId = null;
+
+
+      loadStudents();
+
+    })
+
+    .catch(function(error) {
+
+      alert(
+        "❌ 修改失敗\n\n" +
+        error.message
+      );
+
+
+      console.error(error);
+
+    })
+
+    .finally(function() {
+
+      saveButton.disabled = false;
+
+      saveButton.textContent =
+        "💾 儲存";
+
+    });
+
+  });
+
+
+/* =========================
+   詳細資料視窗
+========================= */
+
+document
+  .getElementById("closeStudentDetail")
+  .addEventListener("click", function() {
+
+    document
+      .getElementById("studentDetailModal")
+      .style.display =
+        "none";
+
+
+    detailStudentId = null;
+
+  });
+
+
+document
+  .getElementById("detailEditButton")
+  .addEventListener("click", function() {
+
+    if (!detailStudentId) {
+
+      return;
+
+    }
+
+
+    editStudent(detailStudentId);
+
+  });
+
+
+document
+  .getElementById("detailDeleteButton")
+  .addEventListener("click", function() {
+
+    if (!detailStudentId) {
+
+      return;
+
+    }
+
+
+    deleteStudent(detailStudentId);
+
+  });
+
+
+/* =========================
+   啟動
+========================= */
+
+loadStudents();
+
+</script>
+
+</body>
+
+</html>
 ```
