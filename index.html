@@ -1656,7 +1656,16 @@ document
 
 loadStudents();
 
+document
+  .getElementById("closeStudentDetail")
+  .addEventListener("click", function() {
 
+    document
+      .getElementById("studentDetailModal")
+      .style.display = "none";
+
+  });
+  
 </script>
 
   <!-- =========================
