@@ -1093,6 +1093,28 @@ students.sort(function(a, b) {
    搜尋＋年級＋狀態＋課程篩選
 ========================= */
 
+  function showStudentDetail(id) {
+
+  const student =
+    allStudents.find(function(student) {
+      return student.id === id;
+    });
+
+  if (!student) {
+    alert("找不到學生資料");
+    return;
+  }
+
+  alert(
+    "👤 姓名：" + student.name +
+    "\n🎓 年級：" + student.grade +
+    "\n🟢 狀態：" + student.status +
+    "\n📚 課程：" +
+    ((student.courses || []).join("、") || "尚未設定")
+  );
+
+}
+  
 function filterStudents() {
 
   const keyword =
