@@ -1138,6 +1138,50 @@ function filterStudents() {
     }).length;
 
 }
+
+  function updateCourseStats(students) {
+
+  const courses = [
+    "英文",
+    "數學",
+    "課輔",
+    "理化",
+    "私中英文",
+    "私中數學",
+    "私中國文"
+  ];
+
+  const courseStats =
+    document.getElementById("courseStats");
+
+  courseStats.innerHTML = "";
+
+  courses.forEach(function(course) {
+
+    const count =
+      students.filter(function(student) {
+
+        return (student.courses || [])
+          .includes(course);
+
+      }).length;
+
+    const box =
+      document.createElement("div");
+
+    box.style.padding = "10px 14px";
+    box.style.background = "#f5f5f5";
+    box.style.borderRadius = "10px";
+    box.style.fontSize = "14px";
+
+    box.textContent =
+      "📚 " + course + " " + count + "人";
+
+    courseStats.appendChild(box);
+
+  });
+
+}
   
 
 document
