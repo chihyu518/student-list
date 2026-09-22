@@ -1105,8 +1105,30 @@ function filterStudents() {
     });
 
   renderStudents(filteredStudents);
+  updateStudentStats(filteredStudents);
+}
+  function updateStudentStats(students) {
+
+  document.getElementById("totalCount").textContent =
+    students.length;
+
+  document.getElementById("activeCount").textContent =
+    students.filter(function(student) {
+      return student.status === "🟢 上課中";
+    }).length;
+
+  document.getElementById("pauseCount").textContent =
+    students.filter(function(student) {
+      return student.status === "🟡 暫停";
+    }).length;
+
+  document.getElementById("endCount").textContent =
+    students.filter(function(student) {
+      return student.status === "🔴 結束";
+    }).length;
 
 }
+  
 
 document
   .getElementById("searchInput")
