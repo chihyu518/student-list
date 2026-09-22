@@ -889,7 +889,27 @@ function loadStudents() {
 ========================= */
 
 function renderStudents(students) {
+  const gradeOrder = [
+    "一年級",
+    "二年級",
+    "三年級",
+    "四年級",
+    "五年級",
+    "六年級",
+    "國一",
+    "國二",
+    "國三"
+  ];
 
+  students.sort(function(a, b) {
+
+    return (
+      gradeOrder.indexOf(a.grade) -
+      gradeOrder.indexOf(b.grade)
+    );
+
+  });
+  
     // =========================
   // 學生人數統計
   // =========================
