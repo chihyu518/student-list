@@ -1094,6 +1094,64 @@ students.sort(function(a, b) {
    搜尋＋年級＋狀態＋課程篩選
 ========================= */
 
+  function filterStudents() {
+
+  const keyword =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const grade =
+    document
+      .getElementById("gradeFilter")
+      .value;
+
+  const status =
+    document
+      .getElementById("statusFilter")
+      .value;
+
+  const course =
+    document
+      .getElementById("courseFilter")
+      .value;
+
+  const filteredStudents =
+    allStudents.filter(function(student) {
+
+      const nameMatch =
+        (student.name || "")
+          .toLowerCase()
+          .includes(keyword);
+
+      const gradeMatch =
+        !grade ||
+        student.grade === grade;
+
+      const statusMatch =
+        !status ||
+        student.status === status;
+
+      const courseMatch =
+        !course ||
+        (student.courses || []).includes(course);
+
+      return (
+        nameMatch &&
+        gradeMatch &&
+        statusMatch &&
+        courseMatch
+      );
+
+    });
+
+  renderStudents(filteredStudents);
+  updateStudentStats(filteredStudents);
+  updateCourseStats(filteredStudents);
+
+}
 window.showStudentDetail = function(id) {
 
   const student =
