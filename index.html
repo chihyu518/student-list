@@ -999,12 +999,16 @@ students.sort(function(a, b) {
         align-items:center;
       ">
 
-        <div style="
-          font-size:18px;
-          font-weight:bold;
-        ">
-          ${student.name}
-        </div>
+<div
+  style="
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+  "
+  onclick="showStudentDetail('${student.id}')"
+>
+  ${student.name}
+</div>
 
 
 <div style="
